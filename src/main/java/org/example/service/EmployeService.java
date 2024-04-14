@@ -15,6 +15,10 @@ public class EmployeService {
             Contractuel contractuel = (Contractuel) employe;
             contractuel.setSalaireNet((2 + contractuel.getPRIME()) * contractuel.getSalaireBrut() - contractuel.getRetenue());
         }
+        if (employe instanceof Journalier){
+            Journalier journalier = (Journalier) employe;
+            journalier.setSalaire(journalier.getMontantJournalier() * journalier.getNombreJour());
+        }
 
 
         repository.add(employe);

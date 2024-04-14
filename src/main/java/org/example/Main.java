@@ -96,8 +96,13 @@ public class Main {
                         //enregistrement journalier
                         System.out.println("Enregistrement d'un journalier");
                         employe = new Journalier();
-                        System.out.println("Entrer le nombre d'heure");
-                        ((Journalier) employe).setNbHeure(scanner.nextInt());
+                        System.out.println("Entrer le nombre de jour de travaille");
+                        ((Journalier) employe).setNombreJour(scanner.nextInt());
+                        System.out.println("Entrer le salaire de l'employe");
+                        ((Journalier) employe).setMontantJournalier(scanner.nextDouble());
+                        employeService.save(employe);
+                        System.out.println("Liste des Employes");
+                        employeService.list();
 
 
                     }
