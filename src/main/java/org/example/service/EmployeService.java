@@ -1,34 +1,33 @@
-package org.example.service;
+package com.example.solidproject.service;
 
-import org.example.entite.Contractuel;
-import org.example.entite.Employe;
-import org.example.entite.Journalier;
-import org.example.repository.EmployeRepository;
+import com.example.solidproject.entity.Employe;
+import com.example.solidproject.entity.Service;
+import com.example.solidproject.repository.interfaces.IEmployeRepository;
+import com.example.solidproject.repository.list.EmployeRepository;
+import com.example.solidproject.service.virement.Virement;
+import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 public class EmployeService {
+    private final IEmployeRepository employeRepository;
 
-    EmployeRepository repository = new EmployeRepository();
-
-    public  void save(Employe employe) {
-        employe.setMatricule("EMP-"+employe.getId());
-        if (employe instanceof Contractuel){
-            Contractuel contractuel = (Contractuel) employe;
-            contractuel.setSalaireNet((2 + contractuel.getPRIME()) * contractuel.getSalaireBrut() - contractuel.getRetenue());
-        }
-        if (employe instanceof Journalier){
-            Journalier journalier = (Journalier) employe;
-            journalier.setSalaire(journalier.getMontantJournalier() * journalier.getNombreJour());
-        }
-
-
-        repository.add(employe);
+    public Employe getByMatricule(String code){
+        return employeRepository.findByMatricule(code);
     }
 
-    public void list() {
-        repository.list().forEach(System.out::println);
+    public void add(Employe employe){
+        employe.setMatricule("EMP00"+employe.getId());
+        employeRepository.save(employe);
     }
 
-    public Employe findByMatricule(String matricule) {
-        return repository.findByMatricule(matricule);
+    public void virerSalaire(Employe employe, Virement virement){
+        int montant = employe.calculerRenumeration();
+        virement.virement(employe,montant);
+    }
+
+    public List<Employe> getAll(){
+        return employeRepository.findAll();
     }
 }

@@ -1,15 +1,12 @@
-package org.example.enums;
+package com.example.solidproject.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum Etat {
-    CONGE (1),
-    ABSENT(2),
-    MALADE(3);
-
-    final long index;
+    Conge(1),Absent(2),Malade(3);
     public static Etat getValue(int index) {
-            return Etat.values()[index-1];
+        return Etat.values()[index-1];
     }
+    private final int index;
 }
